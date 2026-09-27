@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeHub - Beranda</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>TradeHub</h1>
+        <p>Forum jual beli barang antar mahasiswa.</p>
+
+        <nav>
+            <a href="index.html">Beranda</a>
+            <a href="tambah-barang.html">Jual Barang</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Daftar Barang</h2>
+
+            <p>
+                Temukan barang bekas yang dijual oleh mahasiswa.
+                Periksa status barang sebelum melakukan pembelian.
+            </p>
+
+            <form action="#" method="get">
+
+                <label for="search">Cari Barang:</label>
+                <input
+                    type="search"
+                    id="search"
+                    name="search"
+                    placeholder="Masukkan nama barang"
+                >
+
+                <label for="kategori">Kategori:</label>
+                <select id="kategori" name="kategori">
+                    <option value="">Semua Kategori</option>
+                    <option value="akademik">Akademik</option>
+                    <option value="elektronik">Elektronik</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="kos">Peralatan Kos</option>
+                    <option value="olahraga">Olahraga</option>
+                    <option value="lainnya">Lainnya</option>
+                </select>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="">Semua Status</option>
+                    <option value="tersedia">Tersedia</option>
+                    <option value="dipesan">Dipesan</option>
+                    <option value="terjual">Terjual</option>
+                </select>
+
+                <button type="submit">Cari</button>
+
+            </form>
+        </section>
+
+        <section>
+            <h2>Barang Terbaru</h2>
+
+            <table border="1">
+
+                <thead>
+                    <tr>
+                        <th>Gambar</th>
+                        <th>Nama Barang</th>
+                        <th>Kategori</th>
+                        <th>Kondisi</th>
+                        <th>Harga</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <img
+                                src="images/kalkulator.jpg"
+                                alt="Kalkulator Casio FX-991ES Plus berwarna hitam"
+                                width="100"
+                            >
+                        </td>
+                        <td>Kalkulator Casio FX-991ES Plus</td>
+                        <td>Akademik</td>
+                        <td>Bekas - Baik</td>
+                        <td>Rp80.000</td>
+                        <td>Tersedia</td>
+                        <td>
+                            <a href="detail-barang.html">
+                                Lihat Detail
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <img
+                                src="images/headset.jpg"
+                                alt="Headset gaming berwarna hitam"
+                                width="100"
+                            >
+                        </td>
+                        <td>Headset Gaming</td>
+                        <td>Elektronik</td>
+                        <td>Bekas - Sangat Baik</td>
+                        <td>Rp150.000</td>
+                        <td>Dipesan</td>
+                        <td>
+                            <a href="detail-barang.html">
+                                Lihat Detail
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <img
+                                src="images/jaket.jpg"
+                                alt="Jaket hoodie berwarna hitam"
+                                width="100"
+                            >
+                        </td>
+                        <td>Jaket Hoodie</td>
+                        <td>Fashion</td>
+                        <td>Bekas - Baik</td>
+                        <td>Rp100.000</td>
+                        <td>Terjual</td>
+                        <td>
+                            <a href="detail-barang.html">
+                                Lihat Detail
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </section>
+
+        
+
+    </main>
+
+    <footer>
+        <p>
+            &copy; 2026 TradeHub - Forum Jual Beli Mahasiswa
+        </p>
+    </footer>
+
+</body>
+</html>
