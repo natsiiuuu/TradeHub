@@ -1,0 +1,326 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #f4f6f8;
+    color: #222222;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    background-color: #1f4e79;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+header p {
+    margin: 5px 0 15px;
+    font-size: 16px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+section,
+article {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #1f4e79;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: left;
+}
+
+h3 {
+    color: #1f4e79;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* =========================
+   LIST
+========================= */
+
+ol {
+    padding-left: 25px;
+}
+
+ol li {
+    margin-bottom: 8px;
+}
+
+/* =========================
+   SEARCH FORM
+========================= */
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-form label {
+    font-weight: bold;
+}
+
+.search-form input,
+.search-form select {
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1f4e79;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #163a5c;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background-color: #1f4e79;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    text-align: center;
+}
+
+td img {
+    max-width: 100px;
+    height: auto;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    font-weight: bold;
+}
+
+.status-tersedia {
+    color: green;
+}
+
+.status-dipesan {
+    color: #d68910;
+}
+
+.status-terjual {
+    color: #c0392b;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 9px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* =========================
+   DETAIL BARANG
+========================= */
+
+.detail-image {
+    display: block;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    margin: 10px 0 20px;
+}
+
+.seller-info {
+    background-color: #eef5fb;
+    padding: 15px;
+    border-left: 4px solid #1f4e79;
+}
+
+.highlight {
+    font-weight: bold;
+    color: #1f4e79;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background-color: #1f4e79;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    main {
+        width: 95%;
+        margin: 15px auto;
+    }
+
+    section,
+    article {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form input,
+    .search-form select,
+    .search-form button {
+        width: 100%;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 6px;
+    }
+
+    td img {
+        max-width: 70px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}
