@@ -74,10 +74,22 @@
                 Isi informasi barang yang ingin kamu jual.
             </p>
 
-            <div class="card shadow-sm">
+            <button
+                type="button"
+                id="toggle-form-btn"
+                class="btn btn-primary mb-3"
+                aria-controls="jual-form-container"
+                aria-expanded="false"
+            >
+                Jual Barang
+            </button>
+
+            <div class="card shadow-sm" id="jual-form-container">
                 <div class="card-body">
 
-                    <form action="#" method="post">
+                    <div id="form-error" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+                    <form id="jual-form" action="#" method="post" novalidate>
 
                         <div class="row mb-3">
                             <label
@@ -289,6 +301,7 @@
 
                                 <button
                                     type="submit"
+                                    id="submit-btn"
                                     class="btn btn-success"
                                 >
                                     Publikasikan
@@ -324,6 +337,8 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
