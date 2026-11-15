@@ -1,41 +1,83 @@
-TradeHub
-Deskripsi 
-TradeHub adalah aplikasi web forum jual beli barang bekas antar mahasiswa. Aplikasi ini membantu mahasiswa mencari dan menjual barang, seperti buku, kalkulator, elektronik, dan perlengkapan kos.
+# TradeHub
 
-TradeHub menyediakan informasi status barang berupa Tersedia, Dipesan, dan Terjual agar informasi ketersediaan produk lebih jelas.
+Forum jual beli barang bekas antar mahasiswa. Penjual dapat memposting barang,
+pembeli dapat mencari dan melihat detailnya, dan status barang
+(Tersedia, Dipesan, Terjual) dapat diperbarui
 
-Teknologi
-1. HTML
-2. CSS
-3. Bootstrap
-4. JavaScript
-5. jQuery 4.0.0 melalui CDN
 
-Fitur
-1. Menampilkan daftar barang.
-2. Mencari dan memfilter barang berdasarkan kategori dan status.
-3. Menampilkan detail barang dan informasi penjual.
-4. Menyediakan formulir untuk menambahkan barang.
-5. Menampilkan status ketersediaan barang.
-6. Menampilkan produk dari data dummy menggunakan JavaScript.
-7. Mengurutkan produk berdasarkan harga termurah atau termahal.
-8. Menyaring produk langsung berdasarkan nama, kategori, dan status.
-9. Menampilkan pesan jika tidak ada produk yang sesuai dengan filter.
-10. Membuka dan menyembunyikan formulir jual barang dengan animasi jQuery.
-11. Memvalidasi nama barang dan harga sebelum form dikirim.
+## Struktur Repo
+| Folder | Isi |
+|---|---|
+| `/` (root) | Versi awal: HTML, Bootstrap, JavaScript/jQuery |
+| `frontend/` | Aplikasi React (Vite) + Bootstrap + Axios |
+| `backend/` | REST API NestJS (modul `barang`, data di memori) |
+| `docs/screenshots/` | Screenshot setiap tahapan |
 
-Saya memilih Bootstrap karena framework ini menyediakan banyak komponen yang bisa langsung digunakan, seperti navbar, card produk, form pencarian, dan tombol. Bootstrap juga memudahkan saya membuat tampilan TradeHub yang responsif, sehingga tetap nyaman digunakan di laptop maupun HP. Dengan Bootstrap, proses pembuatan tampilan menjadi lebih cepat dan konsisten, serta lebih mudah dikembangkan untuk menambahkan fitur lain ke depannya.
+## Teknologi
+React (Vite), React Router, Bootstrap 5, Axios, NestJS, class-validator.
 
-Implementasi JavaScript dan jQuery
-- `script.js` berisi data dummy produk, fungsi filter kategori, dan logika untuk merender serta menyaring produk pada halaman daftar barang.
-- Produk pada contoh ini disimpan di dalam array JavaScript dan belum disimpan ke database atau server.
-- jQuery dimuat melalui CDN sebelum `script.js` pada halaman daftar barang dan halaman jual barang.
-- Pada halaman jual barang, tombol "Jual Barang" mengatur tampilan form dengan efek `slideToggle()`. Form menampilkan pesan error jika nama barang atau harga belum diisi.
+## Fitur
+- Daftar, pencarian, dan filter kategori barang
+- Detail barang, tambah barang, ubah status, hapus barang
+- Rekomendasi barang dari API eksternal (DummyJSON) dengan state loading, sukses, dan error
+- Backend REST dengan validasi DTO serta penanganan error 404 dan 409
 
-Pengujian manual
-1. Buka `daftar-barang.html`; pastikan lima produk dummy tampil.
-2. Ubah kategori atau status, atau ketik nama barang; pastikan daftar dan jumlah produk diperbarui. Coba juga gabungkan filter kategori dan status.
-3. Ubah pilihan pengurutan untuk memeriksa urutan harga.
-4. Buka `tambah-barang.html`; klik tombol "Jual Barang" untuk membuka dan menyembunyikan form.
+## Endpoint Backend
+| Method | Path | Fungsi |
+|---|---|---|
+| GET | /barang | Semua barang |
+| GET | /barang/:id | Detail barang (404 jika tidak ada) |
+| POST | /barang | Tambah barang (400 jika tidak valid, 409 jika duplikat) |
+| PATCH | /barang/:id | Ubah sebagian data |
+| DELETE | /barang/:id | Hapus barang (204) |
 
-Link sharescreen: https://drive.google.com/file/d/1Jp4eTOn20c_3noe_AX2O57zQVPLiL7NQ/view?usp=sharing
+## Cara Menjalankan
+Backend:
+```
+cd backend
+npm install
+npm run start:dev
+```
+Frontend (terminal lain):
+```
+cd frontend
+npm install
+npm run dev
+```
+Buka http://localhost:5173 (backend di http://localhost:3000).
+
+## Screenshot
+
+### Instalasi
+![Vite berjalan](docs/screenshots/01-vite-localhost.png)
+![Push pertama](docs/screenshots/02-push-pertama.png)
+
+### Frontend
+![Beranda](docs/screenshots/03-frontend-beranda.png)
+![Tampilan mobile](docs/screenshots/04-frontend-mobile.png)
+
+### Konsumsi API eksternal
+![Loading](docs/screenshots/05-api-loading.png)
+![Sukses](docs/screenshots/06-api-success.png)
+![Error](docs/screenshots/07-api-error.png)
+
+### Backend NestJS
+![Hello World](docs/screenshots/08-nest-hello.png)
+![Struktur folder](docs/screenshots/09-nest-struktur.png)
+
+### Pengujian endpoint (REST Client)
+![GET semua](docs/screenshots/10-get-semua.png)
+![GET satu](docs/screenshots/11-get-satu.png)
+![GET 404](docs/screenshots/12-get-404.png)
+![POST 201](docs/screenshots/13-post-201.png)
+![POST 400](docs/screenshots/14-post-400.png)
+![POST 409](docs/screenshots/15-post-409.png)
+![PATCH](docs/screenshots/16-patch.png)
+![DELETE 204](docs/screenshots/17-delete-204.png)
+![GET setelah hapus](docs/screenshots/18-get-setelah-hapus.png)
+
+### Alur Frontend dan Backend
+![Tambah barang](docs/screenshots/19-alur-tambah.png)
+![Ubah status](docs/screenshots/20-alur-ubah.png)
+![Hapus barang](docs/screenshots/21-alur-hapus.png)
+![Backend mati](docs/screenshots/22-error-backend-mati.png)
