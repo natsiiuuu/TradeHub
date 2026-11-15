@@ -1,0 +1,70 @@
+@host = http://localhost:3000
+
+### 1. GET semua barang
+GET {{host}}/barang
+
+### 2. GET satu barang (id ada)
+GET {{host}}/barang/1
+
+### 3. GET satu barang (id tidak ada) -> 404
+GET {{host}}/barang/99
+
+### 4. POST data valid -> 201
+POST {{host}}/barang
+Content-Type: application/json
+
+{
+  "nama": "Buku Kalkulus Jilid 1",
+  "kategori": "Akademik",
+  "kondisi": "Baik",
+  "harga": 45000,
+  "lokasi": "Telkom University",
+  "negosiasi": true,
+  "deskripsi": "Buku masih bagus, ada sedikit coretan."
+}
+
+### 5. POST data tidak valid -> 400
+POST {{host}}/barang
+Content-Type: application/json
+
+{
+  "nama": "ab",
+  "kategori": "Mainan",
+  "kondisi": "Baik",
+  "harga": -5,
+  "lokasi": ""
+}
+
+### 6. POST duplikat -> 409
+POST {{host}}/barang
+Content-Type: application/json
+
+{
+  "nama": "Headset Gaming",
+  "kategori": "Elektronik",
+  "kondisi": "Baik",
+  "harga": 100000,
+  "lokasi": "Dayeuhkolot"
+}
+
+### 7. PATCH ubah status -> 200
+PATCH {{host}}/barang/1
+Content-Type: application/json
+
+{
+  "status": "Dipesan"
+}
+
+### 8. PATCH id tidak ada -> 404
+PATCH {{host}}/barang/99
+Content-Type: application/json
+
+{
+  "status": "Terjual"
+}
+
+### 9. DELETE -> 204
+DELETE {{host}}/barang/3
+
+### 10. GET semua lagi (jumlah berkurang)
+GET {{host}}/barang
