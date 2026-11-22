@@ -1,70 +1,49 @@
 @host = http://localhost:3000
 
-### 1. GET semua barang
+### Isi data awal 1
+POST {{host}}/barang
+Content-Type: application/json
+
+{ "nama": "Kalkulator Casio FX-991ES Plus", "kategori": "Akademik", "kondisi": "Baik", "harga": 80000, "lokasi": "Telkom University", "negosiasi": true, "deskripsi": "Kalkulator berfungsi normal, ada sedikit goresan.", "gambar": "/images/kalkulator.jpg" }
+
+### Isi data awal 2
+POST {{host}}/barang
+Content-Type: application/json
+
+{ "nama": "Headset Gaming", "kategori": "Elektronik", "kondisi": "Sangat Baik", "harga": 150000, "lokasi": "Dayeuhkolot", "status": "Dipesan", "deskripsi": "Lengkap dengan kotak dan kabel.", "gambar": "/images/headset.jpg" }
+
+### Isi data awal 3
+POST {{host}}/barang
+Content-Type: application/json
+
+{ "nama": "Jaket Hoodie", "kategori": "Fashion", "kondisi": "Baik", "harga": 100000, "lokasi": "Buah Batu", "status": "Terjual", "deskripsi": "Hoodie hitam ukuran L.", "gambar": "/images/jaket.jpg" }
+
+### READ semua
 GET {{host}}/barang
 
-### 2. GET satu barang (id ada)
-GET {{host}}/barang/1
+### READ satu 
+GET {{host}}/barang/ID
 
-### 3. GET satu barang (id tidak ada) -> 404
-GET {{host}}/barang/99
+### READ id tidak ada -> 404
+GET {{host}}/barang/tidak-ada
 
-### 4. POST data valid -> 201
+### UPDATE
+PATCH {{host}}/barang/ID
+Content-Type: application/json
+
+{ "status": "Dipesan" }
+
+### CREATE duplikat -> 409
 POST {{host}}/barang
 Content-Type: application/json
 
-{
-  "nama": "Buku Kalkulus Jilid 1",
-  "kategori": "Akademik",
-  "kondisi": "Baik",
-  "harga": 45000,
-  "lokasi": "Telkom University",
-  "negosiasi": true,
-  "deskripsi": "Buku masih bagus, ada sedikit coretan."
-}
+{ "nama": "Headset Gaming", "kategori": "Elektronik", "kondisi": "Baik", "harga": 100000, "lokasi": "Dayeuhkolot" }
 
-### 5. POST data tidak valid -> 400
+### CREATE tidak valid -> 400
 POST {{host}}/barang
 Content-Type: application/json
 
-{
-  "nama": "ab",
-  "kategori": "Mainan",
-  "kondisi": "Baik",
-  "harga": -5,
-  "lokasi": ""
-}
+{ "nama": "ab", "kategori": "Mainan", "kondisi": "Baik", "harga": -5, "lokasi": "" }
 
-### 6. POST duplikat -> 409
-POST {{host}}/barang
-Content-Type: application/json
-
-{
-  "nama": "Headset Gaming",
-  "kategori": "Elektronik",
-  "kondisi": "Baik",
-  "harga": 100000,
-  "lokasi": "Dayeuhkolot"
-}
-
-### 7. PATCH ubah status -> 200
-PATCH {{host}}/barang/1
-Content-Type: application/json
-
-{
-  "status": "Dipesan"
-}
-
-### 8. PATCH id tidak ada -> 404
-PATCH {{host}}/barang/99
-Content-Type: application/json
-
-{
-  "status": "Terjual"
-}
-
-### 9. DELETE -> 204
-DELETE {{host}}/barang/3
-
-### 10. GET semua lagi (jumlah berkurang)
-GET {{host}}/barang
+### DELETE -> 204
+DELETE {{host}}/barang/ID

@@ -3,109 +3,90 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { randomUUID } from 'node:crypto';
-import { Barang } from './entities/barang.entity';
+import { Barang, Prisma } from '../generated/prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateBarangDto } from './dto/create-barang.dto';
 import { UpdateBarangDto } from './dto/update-barang.dto';
 
 @Injectable()
 export class BarangService {
-  private barang: Barang[] = [
-    {
-      id: '1',
-      nama: 'Kalkulator Casio FX-991ES Plus',
-      kategori: 'Akademik',
-      kondisi: 'Baik',
-      harga: 80000,
-      lokasi: 'Telkom University',
-      status: 'Tersedia',
-      negosiasi: true,
-      deskripsi: 'Kalkulator dalam kondisi baik dan berfungsi normal. Ada sedikit goresan pada bagian luar akibat pemakaian.',
-      gambar: '/images/kalkulator.jpg',
-      penjual: 'Fattan',
-      tanggalPosting: '2026-09-27T08:00:00.000Z',
-    },
-    {
-      id: '2',
-      nama: 'Headset Gaming',
-      kategori: 'Elektronik',
-      kondisi: 'Sangat Baik',
-      harga: 150000,
-      lokasi: 'Dayeuhkolot',
-      status: 'Dipesan',
-      negosiasi: false,
-      deskripsi: 'Headset gaming lengkap dengan kotak dan kabel, suara masih jernih.',
-      gambar: '/images/headset.jpg',
-      penjual: 'Fattan',
-      tanggalPosting: '2026-09-28T08:00:00.000Z',
-    },
-    {
-      id: '3',
-      nama: 'Jaket Hoodie',
-      kategori: 'Fashion',
-      kondisi: 'Baik',
-      harga: 100000,
-      lokasi: 'Buah Batu',
-      status: 'Terjual',
-      negosiasi: false,
-      deskripsi: 'Jaket hoodie hitam ukuran L, bahan tebal dan nyaman.',
-      gambar: '/images/jaket.jpg',
-      penjual: 'Fattan',
-      tanggalPosting: '2026-09-29T08:00:00.000Z',
-    },
-  ];
+  constructor(private readonly prisma: PrismaService) {}
 
-  create(dto: CreateBarangDto): Barang {
+  async create(dto: CreateBarangDto): Promise<Barang> {
     const penjual = dto.penjual ?? 'Fattan';
-    const kembar = this.barang.some(
-      (b) =>
-        b.nama.toLowerCase() === dto.nama.toLowerCase() &&
-        b.penjual === penjual,
-    );
+    const kembar = await this.prisma.barang.findFirst({
+      where: { nama: { equals: dto.nama, mode: 'insensitive' }, penjual },
+    });
     if (kembar) {
       throw new ConflictException(
         `Barang "${dto.nama}" sudah pernah diposting oleh ${penjual}`,
       );
     }
-
-    const barangBaru: Barang = {
-      id: randomUUID(),
-      nama: dto.nama,
-      kategori: dto.kategori,
-      kondisi: dto.kondisi,
-      harga: dto.harga,
-      lokasi: dto.lokasi,
-      status: dto.status ?? 'Tersedia',
-      negosiasi: dto.negosiasi ?? false,
-      deskripsi: dto.deskripsi ?? '',
-      gambar: dto.gambar ?? '',
-      penjual,
-      tanggalPosting: new Date().toISOString(),
-    };
-    this.barang.unshift(barangBaru);
-    return barangBaru;
+    return this.prisma.barang.create({ data: { ...dto, penjual } });
   }
 
-  findAll(): Barang[] {
-    return this.barang;
+  async findAll(): Promise<Barang[]> {
+    return this.prisma.barang.findMany({ orderBy: { tanggalPosting: 'desc' } });
   }
 
-  findOne(id: string): Barang {
-    const barang = this.barang.find((b) => b.id === id);
+  async findOne(id: string): Promise<Barang> {
+    const barang = await this.prisma.barang.findUnique({ where: { id } });
     if (!barang) {
       throw new NotFoundException(`Barang dengan id ${id} tidak ditemukan`);
     }
     return barang;
   }
 
-  update(id: string, dto: UpdateBarangDto): Barang {
-    const barang = this.findOne(id);
-    Object.assign(barang, dto);
-    return barang;
+  async update(id: string, dto: UpdateBarangDto): Promise<Barang> {
+    try {
+      return await this.prisma.barang.update({ where: { id }, data: dto });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Barang dengan id ${id} tidak ditemukan`);
+      }
+      throw error;
+    }
   }
 
-  remove(id: string): void {
-    const barang = this.findOne(id);
-    this.barang = this.barang.filter((b) => b.id !== barang.id);
+  async remove(id: string): Promise<void> {
+    try {
+      await this.prisma.barang.delete({ where: { id } });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Barang dengan id ${id} tidak ditemukan`);
+      }
+      throw error;
+    }
+  }
+
+  // Tahap 10 (opsional): statistik sederhana
+  async statistik() {
+    const [total, perStatus, harga] = await Promise.all([
+      this.prisma.barang.count(),
+      this.prisma.barang.groupBy({ by: ['status'], _count: { _all: true } }),
+      this.prisma.barang.aggregate({
+        _avg: { harga: true },
+        _min: { harga: true },
+        _max: { harga: true },
+      }),
+    ]);
+    return {
+      total,
+      perStatus: perStatus.map((s) => ({
+        status: s.status,
+        jumlah: s._count._all,
+      })),
+      harga: {
+        rataRata: Math.round(harga._avg.harga ?? 0),
+        termurah: harga._min.harga,
+        termahal: harga._max.harga,
+      },
+    };
   }
 }

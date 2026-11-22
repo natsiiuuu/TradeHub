@@ -1,0 +1,33 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StatusBarang {
+  Tersedia
+  Dipesan
+  Terjual
+}
+
+model Barang {
+  id             String       @id @default(uuid())
+  nama           String
+  kategori       String
+  kondisi        String
+  harga          Int
+  lokasi         String
+  status         StatusBarang @default(Tersedia)
+  negosiasi      Boolean      @default(false)
+  deskripsi      String       @default("")
+  gambar         String       @default("")
+  penjual        String       @default("Fattan")
+  tanggalPosting DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("barang")
+}

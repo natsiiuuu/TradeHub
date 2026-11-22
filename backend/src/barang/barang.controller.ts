@@ -15,7 +15,6 @@ import { UpdateBarangDto } from './dto/update-barang.dto';
 
 @Controller('barang')
 export class BarangController {
-  // Dependency injection: Nest yang menyuntikkan BarangService
   constructor(private readonly barangService: BarangService) {}
 
   @Post()
@@ -26,6 +25,12 @@ export class BarangController {
   @Get()
   findAll() {
     return this.barangService.findAll();
+  }
+
+  // Harus di atas ':id', kalau tidak "statistik" dianggap sebagai id
+  @Get('statistik')
+  statistik() {
+    return this.barangService.statistik();
   }
 
   @Get(':id')
@@ -41,6 +46,6 @@ export class BarangController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
-    this.barangService.remove(id);
+    return this.barangService.remove(id);
   }
 }
